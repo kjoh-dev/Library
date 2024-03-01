@@ -4,11 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bentham&display=swap" rel="stylesheet">
     <link href="Style/style.css" rel="stylesheet">
     <script src="Script/script.js" defer></script>
     <title>Library</title>
 </head>
 <body>
-    
+    <header>
+        <h1>Library</h1>
+        <div id="sortTypes">
+            <button>NEWEST</button>
+            <p>&nbsp;|&nbsp;</p>
+            <button>POPULAR</button>
+        </div>
+        <button id="addBtn">Add Book</button>
+    </header>
+    <dialog id="bookDialog">
+        <form>
+            <fieldset>
+                <legend>&nbsp;Book Info&nbsp;</legend>
+                <div id="fieldContainer">
+                    <label for="title">Title:&nbsp;</label>
+                    <input type="text" name="title" id="title">
+                    <label for="author">Author:&nbsp;</label>
+                    <input type="text" name="author" id="author">
+                    <label for="pages">Pages:&nbsp;</label>
+                    <input type="text" name="pages" id="pages">
+                    <label for="read">Read?:&nbsp;</label>
+                    <div class="switch" for="read">
+                        <input type="checkbox" name="read">
+                        <span class="slider"></span>
+                    </div>
+                </div>
+            </fieldset>
+            <div>
+                <button value="cancel" formmethod="dialog">Cancel</button>
+                <button id="confirmBtn" value="default">Confirm</button>
+            </div>
+        </form>
+    </dialog>
+    <!-- <p>
+        <button id="showDialog">Show the dialog</button>
+    </p> -->
+    <output></output>
 </body>
 </html>
