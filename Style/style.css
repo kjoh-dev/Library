@@ -13,9 +13,12 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
+  justify-items: center;
 }
 
 header {
+  width: 100%;
+
   display: grid;
   grid-template-columns: repeat(3, auto);
   justify-content: space-around;
@@ -52,6 +55,73 @@ header > button {
   border-radius: 0.35rem;
   padding: 0.3rem 1.25rem;
 }
+
+#bookContainer {
+  width: 100%;
+  padding: 30px 50px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 500px);
+  grid-auto-flow: row;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.bookCard dl {
+  display: grid;
+  grid-template-columns: repeat(4, 110px);
+  grid-template-rows: repeat(6, auto);
+  row-gap: 0.5rem;
+  grid-template-areas: 
+    "tHeader . . ."
+    "title title title title"
+    "aHeader . . ."
+    "author author author author"
+    "pHeader pages . ."
+    "rHeader read . .";
+}
+
+.bookCard dt {
+  font-size: 1.10rem;
+  align-self: end;
+}
+
+.title>dd, .author>dd {
+  align-self: start;
+}
+
+.bookCard .title {
+  grid-area: tHeader;
+}
+
+.bookCard .title+dd {
+  grid-area: title;
+}
+
+.bookCard .author {
+  grid-area: aHeader;
+}
+
+.bookCard .author+dd {
+  grid-area: author;
+}
+
+.bookCard .pages {
+  grid-area: pHeader;
+}
+
+.bookCard .pages+dd {
+  grid-area: pages;
+}
+
+.bookCard .read {
+  grid-area: rHeader;
+}
+
+.bookCard .read+dd {
+  grid-area: read;
+}
+
 /*
 <<<<< Modal Dialog Box >>>>>
 */
