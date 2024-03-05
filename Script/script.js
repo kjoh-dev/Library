@@ -43,7 +43,35 @@ function showBook(book){
         return;
     }
 
-    console.log(`Book: ${book.title} by ${book.author}, ${book.pages} pages, ${book.read ? "already read" : "not read yet"}`);
+    const index = myLibrary.findIndex((b) => book.title === b.title);
+
+    const bookCard = document.createElement("div");
+    bookCard.className = "bookCard";
+    bookCard.innerHTML = `
+        <div class="bookCard">
+        <fieldset>
+            <legend>&nbsp;#${index+1}&nbsp;</legend>
+            <dl>
+                <dt class="title">Title:</dt>
+                <dd>${book.title}</dd>
+                <dt class="author">Author:</dt>
+                <dd>${book.author}</dd>
+                <dt class="pages">Pages:</dt>
+                <dd>${book.pages}</dd>
+                <dt class="read">Read?</dt>
+                <dd>
+                    <label class="switch">
+                        <input type="checkbox" ${book.read ? "checked" : ""}>
+                        <span class="slider"></span>
+                    </label>
+                </dd>
+            </dl>
+        </fieldset>
+        </div>
+    `;
+
+    document.getElementById("bookContainer").append(bookCard);
+
 }
 
 function showAllBooks(){
@@ -80,3 +108,6 @@ confirmBtn.addEventListener("click", (event) => {
     event.preventDefault();
     bookDialog.close(selectEl.value);
 });
+
+showAllBooks();
+
