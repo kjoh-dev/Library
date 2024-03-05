@@ -36,10 +36,9 @@ header {
 
 #sortTypes > p {
   font-size: 2.5rem;
-  /* align-self: center; */
 }
 
-#sortTypes > button {
+#sortTypes button {
   background: none;
   border: none;
   outline: none;
@@ -47,7 +46,7 @@ header {
   cursor: pointer;
 }
 
-header > button {
+#addBtn {
   font-size: 1.5rem;
   font-family: inherit;
   background: none;
@@ -162,12 +161,11 @@ legend {
   justify-self: end;
 }
 
-#fieldContainer > input {
-  /* overflow-wrap: break-word;
-  height: auto; */
-  /* word-wrap: break-word; */
-  /* word-break: break-all; */
+#fieldContainer > label.switch {
+  align-self: end;
+  justify-self: start;
 }
+
 
 /*
     Read/Not-Read Toggle Button (on Modal Dialog Box)
@@ -196,25 +194,25 @@ legend {
     transition: .4s;
   }
   
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-  }
-  
-  input:checked + .slider {
-    background-color: #2196F3;
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(26px);
-  }
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #2196F3;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+  transform: translateX(26px);
+}
