@@ -27,7 +27,7 @@ function addBookToLibrary(book){
         return;
     }
 
-    myLibrary.push(book);
+    myLibrary.unshift(book);
     console.log(`${book.title} has been added to the collection`);
 }
 
@@ -66,24 +66,24 @@ function showBook(book){
     bookCard.className = "bookCard";
     bookCard.innerHTML = `
         <div class="bookCard">
-        <fieldset>
-            <legend>&nbsp;#${index+1}&nbsp;</legend>
-            <dl>
-                <dt class="title">Title:</dt>
-                <dd>${book.title}</dd>
-                <dt class="author">Author:</dt>
-                <dd>${book.author}</dd>
-                <dt class="pages">Pages:</dt>
-                <dd>${book.pages}</dd>
-                <dt class="read">Read?</dt>
-                <dd>
-                    <label class="switch">
-                        <input type="checkbox" ${book.read ? "checked" : ""}>
-                        <span class="slider"></span>
-                    </label>
-                </dd>
-            </dl>
-        </fieldset>
+            <fieldset>
+                <legend>&nbsp;#${index+1}&nbsp;</legend>
+                <dl>
+                    <dt class="title">Title:</dt>
+                    <dd>${book.title}</dd>
+                    <dt class="author">Author:</dt>
+                    <dd>${book.author}</dd>
+                    <dt class="pages">Pages:</dt>
+                    <dd>${book.pages}</dd>
+                    <dt class="read">Read?</dt>
+                    <dd>
+                        <label class="switch">
+                            <input type="checkbox" ${book.read ? "checked" : ""}>
+                            <span class="slider"></span>
+                        </label>
+                    </dd>
+                </dl>
+            </fieldset>
         </div>
     `;
 
@@ -112,20 +112,15 @@ function hideBook(book){
 
 function showAllBooks(books = myLibrary){
     if(books.length === 0) return;
-    if(books.length > 0) hideAllBooks();
+    hideAllBooks();
 
     books.forEach((book) => showBook(book));
 }
 
 function hideAllBooks(){
-    const bookCards = document.getElementsByClassName("bookCard");
-    if(bookCards.length === 0) {
-        console.log(`Unable to hide books. There are no books shown.`)
-        return;
-    }
-
-    for (let hElem of bookCards) {
-        hElem.remove();
+    const bookContainer = document.getElementById("bookContainer");
+    while(bookContainer.hasChildNodes()){
+        bookContainer.removeChild(bookContainer.lastChild);
     }
 
     return;
@@ -178,6 +173,7 @@ function sortBooks(event){
         sortNewestBtn.addEventListener("click", sortBooks, { once:true });
 
         const sortedBooks = myLibrary.toSorted((a, b) => a.title.localeCompare(b.title));
+        console.log(sortedBooks.length);
         showAllBooks(sortedBooks);
     }
 
@@ -188,9 +184,7 @@ function sortBooks(event){
         sortNewestBtn.style.cursor = "default";
         sortAlphaBtn.addEventListener("click", sortBooks, { once:true });
 
-        for (let i = myLibrary.length - 1; i >= 0; i--){
-            showBook(myLibrary[i]);
-        }
+        showAllBooks();
     }
 
 
