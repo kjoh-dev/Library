@@ -62,6 +62,11 @@ function showBook(book){
         return;
     }
 
+    if(findShownBook(book) !== null) {
+        console.log(`Error - ${book.title} is already shown.`);
+        return;
+    }
+
     const bookCard = document.createElement("div");
     bookCard.className = "bookCard";
     bookCard.innerHTML = `
@@ -78,7 +83,7 @@ function showBook(book){
                     <dt class="read">Read?</dt>
                     <dd>
                         <label class="switch">
-                            <input type="checkbox" ${book.read ? "checked" : ""}>
+                            <input type="checkbox" value="${index}" ${book.read ? "checked" : ""}>
                             <span class="slider"></span>
                         </label>
                     </dd>
@@ -87,27 +92,24 @@ function showBook(book){
         </div>
     `;
 
+    bookCard.querySelector(".switch>input").addEventListener("click", toggleBookRead);
+
     document.getElementById("bookContainer").append(bookCard);
 
 }
 
+function toggleBookRead(event){
+    const toggleButton = event.target;
+    if(!(toggleButton instanceof Element)) return;
+
+    const index = toggleButton.value;
+    myLibrary[index].readToggle();
+}
+
 function hideBook(book){
-    const bookCards = document.getElementsByClassName("bookCard");
-    if(bookCards.length === 0) {
-        console.log(`Unable to hide ${book.title}. There are no books shown.`)
-        return;
-    }
-
-    for (let hElem of bookCards) {
-        const title = hElem.querySelector(".class>dd").textContent;
-        if(title === book.title){
-            hElem.remove();
-            return;
-        }
-    }
-
-    console.log(`Unable to hide ${book.title}. Book is not shown.`);
-    return;
+    const bookElem = findShownBook(book);
+    if(bookElem !== null) bookElem.remove();
+    else console.log(`Unable to hide ${book.title}. Book is not shown.`);
 }
 
 function showAllBooks(books = myLibrary){
@@ -124,6 +126,22 @@ function hideAllBooks(){
     }
 
     return;
+}
+
+function findShownBook(book){
+    if(!(book instanceof Book)) return;
+
+    const bookCards = document.getElementsByClassName("bookCard");
+    if(bookCards.length === 0) return null;
+
+    for (let hElem of bookCards) {
+        const title = hElem.querySelector(".title+dd").textContent;
+        if(title === book.title){
+            return hElem;
+        }
+    }
+
+    return null;
 }
 
 addBookToLibrary(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling", 345, false));
@@ -186,18 +204,7 @@ function sortBooks(event){
 
         showAllBooks();
     }
-
-
 }
-
-// function compareTitles(bookA, bookB){
-//     if(!(bookA instanceof Book && bookB instanceof Book)){
-//         console.log("Error - args are NOT Book objects");
-//         return;
-//     }
-
-//     return bookA.title.localeCompare(bookB.title);
-// }
 
 showAllBooks();
 
