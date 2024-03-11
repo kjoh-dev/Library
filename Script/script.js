@@ -110,11 +110,11 @@ function hideBook(book){
     return;
 }
 
-function showAllBooks(){
-    if(myLibrary.length === 0) return;
-    if(myLibrary.length > 0) hideAllBooks();
+function showAllBooks(books = myLibrary){
+    if(books.length === 0) return;
+    if(books.length > 0) hideAllBooks();
 
-    myLibrary.forEach((book) => showBook(book));
+    books.forEach((book) => showBook(book));
 }
 
 function hideAllBooks(){
@@ -129,10 +129,6 @@ function hideAllBooks(){
     }
 
     return;
-}
-
-function compareBookTitles(book1, book2){
-    
 }
 
 addBookToLibrary(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling", 345, false));
@@ -172,12 +168,17 @@ function sortBooks(event){
     const sortButton = event.target;
     if(!(sortButton instanceof Element)) return;
 
+    hideAllBooks();
+
     if(sortButton.textContent === "ALPHABETICAL"){
         sortAlphaBtn.style.fontWeight = "bold";
         sortNewestBtn.style.fontWeight = "normal";
         sortAlphaBtn.style.cursor = "default";
         sortNewestBtn.style.cursor = "pointer";
         sortNewestBtn.addEventListener("click", sortBooks, { once:true });
+
+        const sortedBooks = myLibrary.toSorted((a, b) => a.title.localeCompare(b.title));
+        showAllBooks(sortedBooks);
     }
 
     if(sortButton.textContent === "NEWEST"){
@@ -186,10 +187,23 @@ function sortBooks(event){
         sortAlphaBtn.style.cursor = "pointer";
         sortNewestBtn.style.cursor = "default";
         sortAlphaBtn.addEventListener("click", sortBooks, { once:true });
+
+        for (let i = myLibrary.length - 1; i >= 0; i--){
+            showBook(myLibrary[i]);
+        }
     }
 
 
 }
+
+// function compareTitles(bookA, bookB){
+//     if(!(bookA instanceof Book && bookB instanceof Book)){
+//         console.log("Error - args are NOT Book objects");
+//         return;
+//     }
+
+//     return bookA.title.localeCompare(bookB.title);
+// }
 
 showAllBooks();
 
