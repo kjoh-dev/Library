@@ -22,19 +22,32 @@ function addBookToLibrary(book){
         return;
     }
 
+    if(findBook(book) !== -1) {
+        console.log(`${book.title} is already present in the collection. Book will not be added.`);
+        return;
+    }
+
     myLibrary.push(book);
-    console.log(`${book.title} has been added to the Library`);
+    console.log(`${book.title} has been added to the collection`);
 }
 
-function removeBookFromLibrary(book){
+function findBook(book) {
+    return myLibrary.findIndex((b) => book.title === b.title);
+}
+
+function removeBookFromLibrary(book) {
     if(!(book instanceof Book)) {
         console.log("not a Book");
         return;
     }
 
-    const index = myLibrary.findIndex((b) => book.title === b.title);
+    const index = findBook(book);
+    if(index === -1) {
+        console.log(`${book.title} does not exist in the collection. Nothing to remove.`);
+        return;
+    }
+
     myLibrary.splice(index, 1);
-    console.log(`${book.title} has been removed from the Library`);
 }
 
 function showBook(book){
@@ -43,7 +56,11 @@ function showBook(book){
         return;
     }
 
-    const index = myLibrary.findIndex((b) => book.title === b.title);
+    const index = findBook(book);
+    if(index === -1) {
+        console.log(`${book.title} does not exist in the collection. Cannot show book.`);
+        return;
+    }
 
     const bookCard = document.createElement("div");
     bookCard.className = "bookCard";
@@ -74,14 +91,52 @@ function showBook(book){
 
 }
 
+function hideBook(book){
+    const bookCards = document.getElementsByClassName("bookCard");
+    if(bookCards.length === 0) {
+        console.log(`Unable to hide ${book.title}. There are no books shown.`)
+        return;
+    }
+
+    for (let hElem of bookCards) {
+        const title = hElem.querySelector(".class>dd").textContent;
+        if(title === book.title){
+            hElem.remove();
+            return;
+        }
+    }
+
+    console.log(`Unable to hide ${book.title}. Book is not shown.`);
+    return;
+}
+
 function showAllBooks(){
     if(myLibrary.length === 0) return;
+    if(myLibrary.length > 0) hideAllBooks();
 
     myLibrary.forEach((book) => showBook(book));
 }
 
-addBookToLibrary(new Book("The Hobbit", "J.R.R. Tolkien", 295, true));
+function hideAllBooks(){
+    const bookCards = document.getElementsByClassName("bookCard");
+    if(bookCards.length === 0) {
+        console.log(`Unable to hide books. There are no books shown.`)
+        return;
+    }
+
+    for (let hElem of bookCards) {
+        hElem.remove();
+    }
+
+    return;
+}
+
+function compareBookTitles(book1, book2){
+    
+}
+
 addBookToLibrary(new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling", 345, false));
+addBookToLibrary(new Book("The Hobbit", "J.R.R. Tolkien", 295, true));
 addBookToLibrary(new Book("Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones", "James Clear", 320, false));
 addBookToLibrary(new Book("Redwall", "Brian Jacques", 299, true));
 // addBookToLibrary(new Book("Sapiens: A Bried History of Humankind", "Yuval Noah Harari", 512, false));
@@ -93,6 +148,8 @@ const addButton = document.getElementById("addBtn");
 const bookDialog = document.getElementById("bookDialog");
 const outputBox = document.querySelector("output");
 const confirmBtn = bookDialog.querySelector("#confirmBtn");
+const sortAlphaBtn = document.querySelector("#sortTypes>button:first-child");
+const sortNewestBtn = document.querySelector("#sortTypes>button:last-child");
 
 addButton.addEventListener("click", () => {
     bookDialog.showModal();
@@ -108,6 +165,31 @@ confirmBtn.addEventListener("click", (event) => {
     event.preventDefault();
     bookDialog.close(selectEl.value);
 });
+
+sortNewestBtn.addEventListener("click", sortBooks, { once: true });
+
+function sortBooks(event){
+    const sortButton = event.target;
+    if(!(sortButton instanceof Element)) return;
+
+    if(sortButton.textContent === "ALPHABETICAL"){
+        sortAlphaBtn.style.fontWeight = "bold";
+        sortNewestBtn.style.fontWeight = "normal";
+        sortAlphaBtn.style.cursor = "default";
+        sortNewestBtn.style.cursor = "pointer";
+        sortNewestBtn.addEventListener("click", sortBooks, { once:true });
+    }
+
+    if(sortButton.textContent === "NEWEST"){
+        sortNewestBtn.style.fontWeight = "bold";
+        sortAlphaBtn.style.fontWeight = "normal";
+        sortAlphaBtn.style.cursor = "pointer";
+        sortNewestBtn.style.cursor = "default";
+        sortAlphaBtn.addEventListener("click", sortBooks, { once:true });
+    }
+
+
+}
 
 showAllBooks();
 

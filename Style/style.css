@@ -24,6 +24,10 @@ header {
   justify-content: space-around;
 }
 
+/*
+  <<<<< Sort Buttons >>>>>
+*/
+
 #sortTypes {
   display: grid;
   grid-template-columns: repeat(3, auto);
@@ -43,7 +47,13 @@ header {
   border: none;
   outline: none;
   box-shadow: none;
+  cursor: default;
+  font-weight: bold;
+}
+
+#sortTypes > button:last-child {
   cursor: pointer;
+  font-weight: normal;
 }
 
 #addBtn {
@@ -54,6 +64,10 @@ header {
   border-radius: 0.35rem;
   padding: 0.3rem 1.25rem;
 }
+
+/*
+  <<<<< Book Card >>>>>
+*/
 
 #bookContainer {
   width: 100%;
@@ -79,6 +93,7 @@ header {
     "pHeader pages . ."
     "rHeader read . .";
 }
+
 
 .bookCard dt {
   font-size: 1.10rem;
