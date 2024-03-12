@@ -155,24 +155,38 @@ addBookToLibrary(new Book("Redwall", "Brian Jacques", 299, true));
 
 const showAddModal = document.getElementById("showAddModal");
 const bookDialog = document.getElementById("bookDialog");
-const outputBox = document.querySelector("output");
 const confirmBtn = bookDialog.querySelector("#confirmBtn");
+const addBookForm = bookDialog.getElementsByTagName("form")[0];
 const sortAlphaBtn = document.querySelector("#sortTypes>button:first-child");
 const sortNewestBtn = document.querySelector("#sortTypes>button:last-child");
+// const fieldContainer = document.getElementById("fieldContainer");
 
 showAddModal.addEventListener("click", () => {
     bookDialog.showModal();
 });
 
 bookDialog.addEventListener("close", (e) => {
-    outputBox.value = bookDialog.returnValue === "default"
-    ? "No return value"
-    : `ReturnValue: ${bookDialog.returnValue === "" ? "ESC" : bookDialog.returnValue}.`;
+    const returnValue = bookDialog.returnValue;
+    console.log(`returnValue: ${returnValue}`);
+
+    switch(returnValue) {
+        case "confirm":
+            const formData = new FormData(addBookForm, confirmBtn);
+            const book = new Book(formData.get("title"), formData.get("author"), formData.get("pages"), formData.get("read"));
+            addBookToLibrary(book);
+            showAllBooks();
+            // console.log(formData.get("read"));
+            break;
+        case "cancel":
+        default:
+            break;
+    }
+
 });
 
 confirmBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    bookDialog.close(selectEl.value);
+    bookDialog.close(event.target.value);
 });
 
 sortNewestBtn.addEventListener("click", sortBooks, { once: true });
