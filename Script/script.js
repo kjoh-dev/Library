@@ -153,14 +153,14 @@ addBookToLibrary(new Book("Redwall", "Brian Jacques", 299, true));
 
 // Modal Dialog Box Practice
 
-const addButton = document.getElementById("addBtn");
+const showAddModal = document.getElementById("showAddModal");
 const bookDialog = document.getElementById("bookDialog");
 const outputBox = document.querySelector("output");
 const confirmBtn = bookDialog.querySelector("#confirmBtn");
 const sortAlphaBtn = document.querySelector("#sortTypes>button:first-child");
 const sortNewestBtn = document.querySelector("#sortTypes>button:last-child");
 
-addButton.addEventListener("click", () => {
+showAddModal.addEventListener("click", () => {
     bookDialog.showModal();
 });
 

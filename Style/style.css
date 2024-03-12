@@ -56,7 +56,7 @@ header {
   font-weight: normal;
 }
 
-#addBtn {
+#showAddModal {
   font-size: 1.5rem;
   font-family: inherit;
   background: none;
@@ -158,6 +158,7 @@ header {
 #bookDialog {
   font-size: 1.25rem;
   width: 500px;
+  margin: auto;
 }
 
 legend {
