@@ -157,7 +157,7 @@ const showAddModal = document.getElementById("showAddModal");
 const bookDialog = document.getElementById("bookDialog");
 const confirmBtn = bookDialog.querySelector("#confirmBtn");
 const addBookForm = bookDialog.getElementsByTagName("form")[0];
-const sortAlphaBtn = document.querySelector("#sortTypes>button:first-child");
+const sortTitleBtn = document.querySelector("#sortTypes>button:first-child");
 const sortNewestBtn = document.querySelector("#sortTypes>button:last-child");
 // const fieldContainer = document.getElementById("fieldContainer");
 
@@ -174,7 +174,7 @@ bookDialog.addEventListener("close", (e) => {
             const formData = new FormData(addBookForm, confirmBtn);
             const book = new Book(formData.get("title"), formData.get("author"), formData.get("pages"), formData.get("read"));
             addBookToLibrary(book);
-            showAllBooks();
+            sortBooks();
             // console.log(formData.get("read"));
             break;
         case "cancel":
@@ -189,36 +189,35 @@ confirmBtn.addEventListener("click", (event) => {
     bookDialog.close(event.target.value);
 });
 
-sortNewestBtn.addEventListener("click", sortBooks, { once: true });
-
-function sortBooks(event){
-    const sortButton = event.target;
-    if(!(sortButton instanceof Element)) return;
-
-    hideAllBooks();
-
-    if(sortButton.textContent === "ALPHABETICAL"){
-        sortAlphaBtn.style.fontWeight = "bold";
+function toggleSortButtons(event) {
+    if(event !== undefined && event.target.textContent === "TITLE"){
+        sortTitleBtn.style.fontWeight = "bold";
         sortNewestBtn.style.fontWeight = "normal";
-        sortAlphaBtn.style.cursor = "default";
+        sortTitleBtn.style.cursor = "default";
         sortNewestBtn.style.cursor = "pointer";
-        sortNewestBtn.addEventListener("click", sortBooks, { once:true });
-
-        const sortedBooks = myLibrary.toSorted((a, b) => a.title.localeCompare(b.title));
-        console.log(sortedBooks.length);
-        showAllBooks(sortedBooks);
+        sortNewestBtn.addEventListener("click", toggleSortButtons, { once:true });
+    } else {
+        sortNewestBtn.style.fontWeight = "bold";
+        sortTitleBtn.style.fontWeight = "normal";
+        sortTitleBtn.style.cursor = "pointer";
+        sortNewestBtn.style.cursor = "default";
+        sortTitleBtn.addEventListener("click", toggleSortButtons, { once:true });
     }
 
-    if(sortButton.textContent === "NEWEST"){
-        sortNewestBtn.style.fontWeight = "bold";
-        sortAlphaBtn.style.fontWeight = "normal";
-        sortAlphaBtn.style.cursor = "pointer";
-        sortNewestBtn.style.cursor = "default";
-        sortAlphaBtn.addEventListener("click", sortBooks, { once:true });
+    sortBooks();
+}
 
+function sortBooks(){
+    hideAllBooks();
+
+    if(sortTitleBtn.style.fontWeight === "bold"){
+        const sortedBooks = myLibrary.toSorted((a, b) => a.title.localeCompare(b.title));
+        showAllBooks(sortedBooks);
+
+    } else {
         showAllBooks();
     }
 }
 
-showAllBooks();
-
+toggleSortButtons();
+// sortBooks();
