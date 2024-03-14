@@ -70,6 +70,7 @@ function showBook(book){
     const bookCard = document.createElement("div");
     bookCard.className = "bookCard";
     bookCard.innerHTML = `
+        <button class="removeBtn" value="${index}">X</button>
         <fieldset>
             <legend>&nbsp;#${index+1}&nbsp;</legend>
             <dl>
@@ -90,10 +91,21 @@ function showBook(book){
         </fieldset>
     `;
 
+    bookCard.querySelector(".bookCard> button").addEventListener("click", removeBook);
     bookCard.querySelector(".switch>input").addEventListener("click", toggleBookRead);
 
     document.getElementById("bookContainer").append(bookCard);
+}
 
+function removeBook(event) {
+    const removeButton = event.target;
+    if(!(removeButton instanceof Element)) return;
+
+    const index = removeButton.value;
+    const book = myLibrary[index];
+    console.log(`index: ${index} | book title: ${book.title}`);
+    removeBookFromLibrary(book);
+    sortBooks();
 }
 
 function toggleBookRead(event){

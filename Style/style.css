@@ -63,6 +63,7 @@ header {
   align-self: center;
   border-radius: 0.35rem;
   padding: 0.3rem 1.25rem;
+  cursor: pointer;
 }
 
 /*
@@ -79,6 +80,20 @@ header {
   gap: 0.5rem;
   justify-content: center;
 }
+
+.bookCard {
+  position: relative;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 0.5rem;
+  font-size: 1rem;
+  background: none;
+  padding: 0.15rem 0.4rem;
+  cursor: pointer;
+} 
 
 .bookCard dl {
   display: grid;
@@ -155,6 +170,7 @@ header {
   width: 500px;
   margin: auto;
 }
+
 
 legend {
   font-size: 2rem;
