@@ -70,26 +70,24 @@ function showBook(book){
     const bookCard = document.createElement("div");
     bookCard.className = "bookCard";
     bookCard.innerHTML = `
-        <div class="bookCard">
-            <fieldset>
-                <legend>&nbsp;#${index+1}&nbsp;</legend>
-                <dl>
-                    <dt class="title">Title:</dt>
-                    <dd>${book.title}</dd>
-                    <dt class="author">Author:</dt>
-                    <dd>${book.author}</dd>
-                    <dt class="pages">Pages:</dt>
-                    <dd>${book.pages}</dd>
-                    <dt class="read">Read?</dt>
-                    <dd>
-                        <label class="switch">
-                            <input type="checkbox" value="${index}" ${book.read ? "checked" : ""}>
-                            <span class="slider"></span>
-                        </label>
-                    </dd>
-                </dl>
-            </fieldset>
-        </div>
+        <fieldset>
+            <legend>&nbsp;#${index+1}&nbsp;</legend>
+            <dl>
+                <dt class="title">Title:</dt>
+                <dd>${book.title}</dd>
+                <dt class="author">Author:</dt>
+                <dd>${book.author}</dd>
+                <dt class="pages">Pages:</dt>
+                <dd>${book.pages}</dd>
+                <dt class="read">Read?</dt>
+                <dd>
+                    <label class="switch">
+                        <input type="checkbox" value="${index}" ${book.read ? "checked" : ""}>
+                        <span class="slider"></span>
+                    </label>
+                </dd>
+            </dl>
+        </fieldset>
     `;
 
     bookCard.querySelector(".switch>input").addEventListener("click", toggleBookRead);
