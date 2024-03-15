@@ -197,6 +197,12 @@ legend {
   justify-self: start;
 }
 
+#validationMsg {
+  display: none;
+  color: red;
+  font-size: 1rem;
+}
+
 #bookDialog > form > div {
   display: grid;
   grid-template-columns: repeat(2, auto);

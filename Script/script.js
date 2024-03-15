@@ -185,7 +185,6 @@ bookDialog.addEventListener("close", (e) => {
             const book = new Book(formData.get("title"), formData.get("author"), formData.get("pages"), formData.get("read"));
             addBookToLibrary(book);
             sortBooks();
-            // console.log(formData.get("read"));
             break;
         case "cancel":
         default:
@@ -194,10 +193,24 @@ bookDialog.addEventListener("close", (e) => {
 
 });
 
-confirmBtn.addEventListener("click", (event) => {
+confirmBtn.addEventListener("click", validateInputs);
+
+function validateInputs(event){
     event.preventDefault();
-    bookDialog.close(event.target.value);
-});
+    const inputElems = document.querySelectorAll("#fieldContainer>input");
+    const validationMsgElem = document.getElementById("validationMsg");
+    let formValid = true;
+    for (const input of inputElems){
+        if(input.reportValidity() === false) formValid = false;
+    }
+
+    if(formValid) {
+        validationMsgElem.style.display = "none";
+        bookDialog.close(event.target.value);
+    } else {
+        validationMsgElem.style.display = "block";
+    }
+}
 
 function toggleSortButtons(event) {
     if(event !== undefined && event.target.textContent === "TITLE"){

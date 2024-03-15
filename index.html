@@ -28,12 +28,12 @@
             <fieldset>
                 <legend>&nbsp;Book Info&nbsp;</legend>
                 <div id="fieldContainer">
-                    <label for="title">Title:&nbsp;</label>
-                    <input type="text" name="title" id="title">
-                    <label for="author">Author:&nbsp;</label>
-                    <input type="text" name="author" id="author">
-                    <label for="pages">Pages:&nbsp;</label>
-                    <input type="text" name="pages" id="pages">
+                    <label for="title">Title*:&nbsp;</label>
+                    <input type="text" name="title" id="title" required>
+                    <label for="author">Author*:&nbsp;</label>
+                    <input type="text" name="author" id="author" required>
+                    <label for="pages">Pages*:&nbsp;</label>
+                    <input type="number" name="pages" id="pages" required>
                     <label for="read">Read?:&nbsp;</label>
                     <label class="switch">
                         <input type="checkbox" name="read">
@@ -41,9 +41,10 @@
                     </label>
                 </div>
             </fieldset>
+            <p id="validationMsg">&nbsp;*Required fields</p>
             <div>
-                <button id="confirmBtn" value="confirm">Confirm</button>
-                <button value="cancel" formmethod="dialog">Cancel</button>
+                <button type="submit" id="confirmBtn" value="confirm">Confirm</button>
+                <button value="cancel" formmethod="dialog" formnovalidate>Cancel</button>
             </div>
         </form>
     </dialog>
