@@ -95,6 +95,10 @@ header {
   cursor: pointer;
 } 
 
+.bookCard fieldset {
+    height: 100%;
+}
+
 .bookCard dl {
   display: grid;
   grid-template-columns: repeat(4, 110px);
