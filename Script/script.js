@@ -185,6 +185,7 @@ bookDialog.addEventListener("close", (e) => {
             const book = new Book(formData.get("title"), formData.get("author"), formData.get("pages"), formData.get("read"));
             addBookToLibrary(book);
             sortBooks();
+            initializeBookDialog();
             break;
         case "cancel":
         default:
@@ -210,6 +211,16 @@ function validateInputs(event){
     } else {
         validationMsgElem.style.display = "block";
     }
+}
+
+function initializeBookDialog(){
+    const inputElems = document.querySelectorAll("#fieldContainer>input");
+    for (const input of inputElems){
+        input.value = "";
+    }
+
+    const readToggle = bookDialog.querySelector(".switch input");
+    readToggle.checked = false;
 }
 
 function toggleSortButtons(event) {
@@ -243,4 +254,3 @@ function sortBooks(){
 }
 
 toggleSortButtons();
-// sortBooks();
